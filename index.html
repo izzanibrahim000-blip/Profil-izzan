@@ -1,0 +1,183 @@
+<!DOCTYPE html>  <html lang="id">  
+<head>  
+  <meta charset="UTF-8">  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+  <title>Halaman pertamaku</title>  
+  <style>  
+    body {  
+      background-color: #404040;  
+      font-family: Georgia;  
+      padding: 20px;  
+      color: white;  
+    }  h1 {  
+  color: #50a2f1;  
+  text-align: center;  
+}  
+
+h2 {  
+  color: #ff4500;  
+  border-bottom: 2px solid #ff4500;  
+  padding-bottom: 5px;  
+}  
+
+ul {  
+  color: #ffffff;  
+  padding: 15px 30px;  
+  border-radius: 10px;  
+}  
+
+a {  
+  color: #ffffff;  
+  background-color: #ff0000;  
+  padding: 10px 15px;  
+  text-decoration: none;  
+  border-radius: 5px;  
+  display: inline-block;  
+  margin-top: 30px;  
+}  
+
+.kartu {  
+  background-color: #505050;  
+  padding: 20px;  
+  border-radius: 15px;  
+  margin-bottom: 20px;  
+  border: 1px solid #666;  
+}  
+
+.tombol {  
+  text-align: center;  
+}  
+
+#tombolReset {  
+  margin: 15px;  
+  padding: 5px;  
+  background-color: #666;  
+  color: white;  
+  border: none;
+}  
+
+#tombolHapus {  
+  margin: 15px;  
+  padding: 5px;  
+  color: white;  
+  background-color: #666;  
+  border: none;  
+}  
+
+#tombolTambah {  
+  margin: 15px;  
+  padding: 5px;  
+  background-color: #666;  
+  color: white;  
+  border: none;  
+}  
+
+#tombolCari {  
+  margin: 10px;  
+  padding: 5px;  
+  background-color: #666;  
+  color: white;  
+  border: none;  
+}
+
+  </style>  
+</head>  
+<body>  
+  <h1>Halo, aku calon web developer</h1>  
+  <p>Ini paragraf pertamaku</p>    <div class="kartu">  
+    <ul>  
+      <li>Nama: Izzan</li>  
+      <li>Target: Frontend developer</li>  
+      <li>Mulai belajar: Sabtu 26 September 2026</li>  
+    </ul>  
+  </div>    <div class="kartu">  
+    <h2>Tentang aku:</h2>  
+    <p>Perkenalkan nama saya Izzan, masih duduk di bangku SMP dan bercita-cita menjadi Frontend developer</p>  <h2>Hobi:</h2>  
+<ul id="daftarHobi"></ul>
+
+  </div>  
+  <button id="tombolTambah">Tambah hobi</button>  
+  <button id="tombolHapus">Hapus hobi</button>  
+  <button id="tombolReset">Reset</button>  
+  <button id="tombolCari">Cari hobi</button>    <div class="tombol">  
+    <a id="tombolYoutube" style="cursor: pointer;">Klik di sini</a>  
+  </div>    <script>  
+    console.log("Halo Izzan, javascript sudah menyala")  
+  
+    alert("Halo selamat datang di web pertama ku")  
+  
+    const tombol = document.getElementById("tombolYoutube");  
+  
+    tombol.onclick = function() {  
+      alert("Terima kasih sudah mampir ya");  
+      tombol.style.backgroundColor = "blue";  
+      tombol.innerHTML = "sudah di klik";  
+    }  
+  
+    let hobi = JSON.parse(localStorage.getItem("dataHobi")) || [  
+      { nama: "Membaca", selesai: false, prioritas: "Tinggi"},  
+      { nama: "Koding", selesai: false, prioritas: "Tinggi"},  
+      { nama: "Main game", selesai: false, prioritas: "Tinggi"}  
+    ];  
+  
+    const daftarHobi = document.getElementById("daftarHobi");  
+    const tombolTambah = document.getElementById("tombolTambah");  
+    const tombolHapus = document.getElementById("tombolHapus");  
+    const tombolReset = document.getElementById("tombolReset");  
+    const tombolCari = document.getElementById("tombolCari")  
+ 
+    const tampilkan = () => {  
+      daftarHobi.innerHTML = "";  
+  
+      hobi.forEach((item) => {  
+        let li = document.createElement("li");  
+        li.textContent = `${item.nama} (${item.prioritas})`;  
+        daftarHobi.appendChild(li);  
+      });  
+  
+      localStorage.setItem("dataHobi", JSON.stringify(hobi))  
+    }  
+  
+    tampilkan();  
+  
+    tombolTambah.onclick = () => {  
+      let hobiBaru = prompt("Mau tambah hobi apa?")  
+      if (hobiBaru) {  
+        hobi.push({ nama: hobiBaru, selesai: false, prioritas: "Tinggi" });  
+        tampilkan();  
+      };  
+    };  
+  
+    tombolHapus.onclick = () => {  
+      hobi.pop();  
+      tampilkan();  
+    }  
+  
+    tombolReset.onclick = () => {  
+      hobi = [  
+        { nama: "Membaca", selesai: false, prioritas: "Tinggi" },  
+        { nama: "Koding", selesai: false, prioritas: "Tinggi" },  
+        { nama: "Main game", selesai: false, prioritas: "Tinggi" }  
+      ];  
+        
+      tampilkan();  
+    };  
+  
+    tombolCari.onclick = () => {  
+      let kataKunci = prompt("Mau cari hobi apa?");  
+  
+      if (kataKunci) {  
+        let hasil = hobi.filter((item) => item.nama.toLowerCase().includes(kataKunci.toLowerCase()));  
+  
+        if (hobi.length === 0) {  
+          alert("Hobi tidak di temukan");  
+        } else {  
+          let daftarNama = hasil.map((item) => item.nama);  
+          alert("Ditemukan " + daftarNama.join(", "));  
+        }  
+      }  
+    };  
+  
+  </script>  
+</body>  
+</html> 
